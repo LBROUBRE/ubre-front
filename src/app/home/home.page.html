@@ -1,0 +1,25 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      ÜBRE
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="auth-form">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Blank</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-grid>
+    <ion-row>
+      <ion-col align-self-center>
+        <ion-button [routerLink]="['/registration']" expand="block" color="primary">Rexistrarse</ion-button>
+        <span class="divider line one-line">ou</span>
+        <span class="already">Xa estás rexistrado?</span>
+        <ion-button [routerLink]="['/login']" expand="block" color="danger">Iniciar sesión</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
