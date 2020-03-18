@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Router, NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -11,16 +11,19 @@ export class Tab1Page implements OnInit {
 
   results: Observable<any>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private router: Router) { }
 
   ngOnInit() {
   }
 
   sendRequest() {
-    var origin = (<HTMLInputElement>document.getElementById("origin_input")).value
-    var destination = (<HTMLInputElement>document.getElementById("destination_input")).value
-    this.results = this.http.get("http://localhost:8000/route/"+origin+"/"+destination);
-    this.results.subscribe(res => console.log(res));
+    let navigationExtras: NavigationExtras = {
+      queryParams: {
+        "origin":(<HTMLInputElement>document.getElementById("origin_input")).value,
+        "destination":(<HTMLInputElement>document.getElementById("origin_input")).value
+      }
+    };
+    this.router.navigate(['/route-map'], navigationExtras);
   }
 
 }
