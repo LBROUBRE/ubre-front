@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Map, latLng, tileLayer, Layer, marker, Polyline } from 'leaflet';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { Map, tileLayer, marker, Polyline } from 'leaflet';
+import { ActivatedRoute} from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-route-map',
@@ -12,7 +14,9 @@ export class RouteMapPage implements OnInit {
     origin: String;
     destination: String;
 
-    constructor(private route: ActivatedRoute) {
+    backend_response: Observable<any>;
+
+    constructor(private route: ActivatedRoute, private http: HttpClient) {
     }
 
   ngOnInit() {
@@ -28,25 +32,27 @@ export class RouteMapPage implements OnInit {
 
   leafletMap() {
 
-    var polyline = "mtx`Gbmet@dHW}Fe`Ac_AeiA{y@crBefAqiAel@vKw[sZeeBaZuwAxr@_zBkiBwtBaJyq@ed@snBs[}`B~_@od@ph@e`Az_@}j@oItIfo@y[rp@qq@_gBhAq[" //TODO delete - example
-    var decoded = this.decodePolyline(polyline)
+    this.backend_response = this.http.get("http://localhost:8000/route/"+this.origin+"/"+this.destination);
 
     // In setView add latLng and zoom
-    this.map = new Map('mapId').setView([42.339236, -8.461685], 11);
+    this.map = new Map('mapId').setView([42.339236, -8.461685], 11); //TODO centrar el mapa dependiendo de la ruta dibujada
     tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: 'OpenStreetMap © ionic LeafLet',
+        attribution: 'OpenStreetMap © ionic LeafLet',
     }).addTo(this.map);
+
+    this.backend_response.subscribe(res => {
+        var polyline_response = res["polyline"];
+        var decoded = this.decodePolyline(polyline_response);
+        var poly = new Polyline(decoded)
+        poly.addTo(this.map)
+    });
+    console.log("hola")
 
     marker([42.339236, -8.461685]).addTo(this.map)
       .bindPopup('Welcome to ÜBRE demo.')
       .openPopup();
-    
-    console.log("DATA:\n"+decoded)
 
     //Layer.getLatLangs(); //Returns the current geographical position of the marker.
-
-    var poly = new Polyline(decoded)
-    poly.addTo(this.map)
 
   }
 
