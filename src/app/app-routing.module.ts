@@ -32,9 +32,18 @@ const routes: Routes = [
   {
     path: 'notifications',
     loadChildren: () => import('./notifications/notifications.module').then( m => m.NotificationsPageModule)
-  },  {
+  },
+  {
     path: 'route-map',
     loadChildren: () => import('./route-map/route-map.module').then( m => m.RouteMapPageModule)
+  },
+  {
+    path: 'origin',
+    loadChildren: () => import('./origin/origin.module').then( m => m.OriginPageModule)
+  },
+  {
+    path: 'origin-map',
+    loadChildren: () => import('./origin-map/origin-map.module').then( m => m.OriginMapPageModule)
   },
 
 

@@ -11,7 +11,7 @@
 <!--realmente tiene que haber una manera de poner el menu en todas las tabs sin replicarlo 800 veces, revisar-->
 <ion-content>
   <form>
-    <ion-searchbar placeholder="Onde queres que te recollamos?" id="origin_input"></ion-searchbar>
+    <ion-searchbar [routerLink]="['/origin']" placeholder="Onde queres que te recollamos?" id="origin_input"></ion-searchbar>
     <ion-searchbar placeholder="Onde queres ir?" id="destination_input"></ion-searchbar>
     <ion-item>
       <ion-label>Cando queres ir?</ion-label>

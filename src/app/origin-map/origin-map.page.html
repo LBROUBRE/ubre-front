@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Lugar de recollida</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <ion-item style="cursor: pointer" (click)="locatePosition()">
+    <ion-button fill="clear">
+    <ion-icon slot="start" name="locate"></ion-icon>
+      Ubicación actual
+    </ion-button>
+  </ion-item>
+
+  <ion-item>
+    <ion-icon slot="start" name="golf-outline"></ion-icon>
+    <ion-label position="stacked">Dirección</ion-label>
+    <ion-textarea [(ngModel)]="address" type="text" style="margin-top:10px;"></ion-textarea>
+  </ion-item>
+
+  <div id="mapOrigin" style="height:60%">
+  </div>
+
+  <ion-button shape="round" expand="block" (click)="confirmPickupLocation()">Confirmar punto de recollida</ion-button>
+
+</ion-content>
