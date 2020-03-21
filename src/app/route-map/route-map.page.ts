@@ -51,8 +51,6 @@ export class RouteMapPage implements OnInit {
       .bindPopup('Welcome to ÜBRE demo.')
       .openPopup();
 
-    //Layer.getLatLangs(); //Returns the current geographical position of the marker.
-
   }
 
   /** Remove map when we have multiple map object */

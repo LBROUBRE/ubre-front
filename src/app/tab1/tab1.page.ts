@@ -20,7 +20,7 @@ export class Tab1Page implements OnInit {
     let navigationExtras: NavigationExtras = {
       queryParams: {
         "origin":(<HTMLInputElement>document.getElementById("origin_input")).value,
-        "destination":(<HTMLInputElement>document.getElementById("origin_input")).value
+        "destination":(<HTMLInputElement>document.getElementById("destination_input")).value
       }
     };
     this.router.navigate(['/route-map'], navigationExtras);
