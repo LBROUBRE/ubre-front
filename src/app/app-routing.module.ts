@@ -38,6 +38,10 @@ const routes: Routes = [
     loadChildren: () => import('./route-map/route-map.module').then( m => m.RouteMapPageModule)
   },
   {
+    path: 'route-map/:polylineID',
+    loadChildren: () => import('./route-map/route-map.module').then( m => m.RouteMapPageModule)
+  },
+  {
     path: 'origin',
     loadChildren: () => import('./origin/origin.module').then( m => m.OriginPageModule)
   },
@@ -45,6 +49,15 @@ const routes: Routes = [
     path: 'origin-map',
     loadChildren: () => import('./origin-map/origin-map.module').then( m => m.OriginMapPageModule)
   },
+  {
+    path: 'route-list',
+    loadChildren: () => import('./route-list/route-list.module').then( m => m.RouteListPageModule)
+  },
+  {
+    path: 'my-trips',
+    loadChildren: () => import('./my-trips/my-trips.module').then( m => m.MyTripsPageModule)
+  },
+
 
 
 
