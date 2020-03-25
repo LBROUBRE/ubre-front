@@ -36,7 +36,12 @@ export class RouteMapPage implements OnInit {
         var decoded = this.decodePolyline(this.polylineID);
         var poly = new Polyline(decoded)
         poly.addTo(this.map)
+
         */
+      
+        marker([42.339236, -8.461685]).addTo(this.map)
+          .bindPopup('Welcome to ÜBRE demo.')
+          .openPopup();
     }
 
     /** Remove map when we have multiple map object */
