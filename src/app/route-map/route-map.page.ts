@@ -32,7 +32,7 @@ export class RouteMapPage implements OnInit {
 
   leafletMap() {
 
-    this.backend_response = this.http.get("http://localhost:8000/route/"+this.origin+"/"+this.destination);
+    this.backend_response = this.http.get("http://localhost:8000/movility/rutas/"+this.origin+"/"+this.destination);
 
     // In setView add latLng and zoom
     this.map = new Map('mapId').setView([42.339236, -8.461685], 11); //TODO centrar el mapa dependiendo de la ruta dibujada
