@@ -3,13 +3,16 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Ruta</ion-title>
+    <ion-title>Ruta en mapa</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
-<ion-content>
-  <div id="mapId" style="width: 100%; height: 100%">
-  </div>
+<ion-content>  
+
+  <div id="mapId" style="width: 100%; height: 60%"></div>
+
+  <ion-text>Polyline ID: {{polylineID}}</ion-text>
+  
 </ion-content>
 

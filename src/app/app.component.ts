@@ -46,6 +46,11 @@ export class AppComponent {
         url   : "/settings",
         icon  : "settings"
       },
+      {
+        title : "Pechar sesión",
+        url   : "/home",
+        icon  : "log-out"
+      },
     ]
   }
 }

@@ -2,21 +2,21 @@
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
-      </ion-buttons>
+    </ion-buttons>
     <ion-title>
       Viaxes
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<!--realmente tiene que haber una manera de poner el menu en todas las tabs sin replicarlo 800 veces, revisar-->
 <ion-content>
   <form>
-    <ion-searchbar [routerLink]="['/origin']" placeholder="Onde queres que te recollamos?"></ion-searchbar>
-    <ion-searchbar placeholder="Onde queres ir?"></ion-searchbar>
+    <!--[routerLink]="['/origin']" -->
+    <ion-searchbar placeholder="Onde queres que te recollamos?" id="origin_input"></ion-searchbar>
+    <ion-searchbar placeholder="Onde queres ir?" id="destination_input"></ion-searchbar>
     <ion-item>
       <ion-label>Cando queres ir?</ion-label>
       <ion-datetime displayFormat="D MMM YYYY H:mm" value="2020-06-21T12:00Z"></ion-datetime>
     </ion-item>
-    <ion-button [routerLink]="['/route-map']" type="submit" color="danger" shape="round">Buscar viaxe</ion-button>
+    <ion-button (click)="sendRequest()" type="submit" color="danger" shape="round">Buscar viaxe</ion-button>
   </form>
 </ion-content>
