@@ -24,23 +24,34 @@ export class RouteMapPage implements OnInit {
 
     leafletMap() {
         // In setView add latLng and zoom
-        this.map = new Map('mapId').setView([42.339236, -8.461685], 11); //TODO centrar el mapa dependiendo de la ruta dibujada
-        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'OpenStreetMap © ionic LeafLet',
-        }).addTo(this.map);
 
         this.route.params.subscribe(params => {
             this.polylineID = params["polylineID"];
         });
-        /*
+        
         var decoded = this.decodePolyline(this.polylineID);
+        
+        var middle_lat = decoded[Math.round(decoded.length/2)][0];
+        var middle_lon = decoded[Math.round(decoded.length/2)][1];
+        var origin_lat = decoded[0][0];
+        var origin_lon = decoded[0][1];
+        var destination_lat = decoded[decoded.length-1][0];
+        var destination_lon = decoded[decoded.length-1][1];
+
+        this.map = new Map('mapId').setView([middle_lat, middle_lon], 11); //TODO centrar el mapa dependiendo de la ruta dibujada
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'OpenStreetMap - ÜBRE',
+        }).addTo(this.map);
+
         var poly = new Polyline(decoded)
         poly.addTo(this.map)
 
-        */
-      
-        marker([42.339236, -8.461685]).addTo(this.map)
-          .bindPopup('Welcome to ÜBRE demo.')
+        marker([destination_lat, destination_lon]).addTo(this.map)
+          .bindPopup('DESTINATION')
+          .openPopup();
+          
+        marker([origin_lat, origin_lon]).addTo(this.map)
+          .bindPopup('ORIGIN')
           .openPopup();
     }
 
