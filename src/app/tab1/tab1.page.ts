@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -11,12 +12,21 @@ export class Tab1Page implements OnInit {
 
   results: Observable<any>;
 
-  constructor(private router: Router) { }
-
+  constructor(private router: Router, public loadingController: LoadingController) { }
+  
   ngOnInit() {
   }
 
-  sendRequest() {
+  async sendRequest() {
+    const loading = await this.loadingController.create({
+      message: 'Un momentiño, por favor...',
+      duration: 1000
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+    console.log('Loading dismissed!');
+
     let navigationExtras: NavigationExtras = {
       queryParams: {
         "origin":(<HTMLInputElement>document.getElementById("origin_input")).value,
@@ -25,5 +35,4 @@ export class Tab1Page implements OnInit {
     };
     this.router.navigate(['/route-list'], navigationExtras);
   }
-
 }

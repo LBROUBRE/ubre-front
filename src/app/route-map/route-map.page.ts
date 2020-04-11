@@ -40,20 +40,22 @@ export class RouteMapPage implements OnInit {
 
         this.map = new Map('mapId').setView([middle_lat, middle_lon], 11); //TODO centrar el mapa dependiendo de la ruta dibujada
         tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'OpenStreetMap - ÜBRE',
+            attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
         }).addTo(this.map);
 
         var poly = new Polyline(decoded)
         poly.addTo(this.map)
 
         marker([destination_lat, destination_lon]).addTo(this.map)
-          .bindPopup('DESTINATION')
+          .bindPopup('Punto de deixada')
           .openPopup();
           
         marker([origin_lat, origin_lon]).addTo(this.map)
-          .bindPopup('ORIGIN')
+          .bindPopup('Punto de recollida')
           .openPopup();
     }
+
+    
 
     /** Remove map when we have multiple map object */
     ionViewWillLeave() {

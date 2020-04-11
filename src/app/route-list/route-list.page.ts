@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild} from '@angular/core';
+import { IonSelect } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
 
@@ -9,6 +10,16 @@ import { Router, NavigationExtras } from '@angular/router';
 })
 export class RouteListPage implements OnInit {
 
+  // show: boolean = true
+  hideList = true;
+ 
+  @ViewChild('routeList', {static: false}) routeOrderRef: IonSelect;
+  reorderRoutes() {
+    this.routeOrderRef.open();
+  }
+
+  // rellenar array de routes con la info proveniente de la bbdd, que se llena mediante la demanda
+  // o sea, suscribirse a rutas a modo de reservas hasta cumplir cierto umbral
   routes: Array<any> = [
     {
       routeID: "ROUTE_ID_1",
@@ -35,6 +46,8 @@ export class RouteListPage implements OnInit {
       price: "1,85",
     }
   ]
+
+  // sort by timeToDest and price functions
 
   constructor(private router: Router) { }
 
