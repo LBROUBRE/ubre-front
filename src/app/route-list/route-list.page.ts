@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild} from '@angular/core';
 import { IonSelect } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { Router, NavigationExtras } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-route-list',
@@ -20,7 +21,7 @@ export class RouteListPage implements OnInit {
 
   // rellenar array de routes con la info proveniente de la bbdd, que se llena mediante la demanda
   // o sea, suscribirse a rutas a modo de reservas hasta cumplir cierto umbral
-  routes: Array<any> = [
+  routes: any = [
     {
       routeID: "ROUTE_ID_1",
       polylineID: "_qlaGp|qr@??CPDh@FEXYpAaBd@jBz@jEB\\LzA?xAIfAQbA}@hC_@rAENSnAC^C|@?hABhCDrCDhFGpCOvAOr@St@i@tAcAxAGJwArBa@lAU~AAxAJrA\\vAj@hAfAnAnAzAl@dAl@jBV`BLfBDnBNtI^lRHfCNzA^xBl@nBt@~ArBxCt@rAlAfDv@pAp@v@vMhKl@d@n@x@j@hAd@`BZ~@`@pAlCtI`@rAHXd@bAt@bAbAv@hAb@|Dn@rAb@~A`ArAnAt@fAbBfD~K`UvAtB~EzEzAxBnArCnEbMpGjQTn@pC|Hl@p@RNVFrE`@l@DxBn@bAXn@h@xAfB`AXf@Tj@f@vBxBfM~INPxAbB~@`Bl@dAnD`Ib@lBBvAa@hOPzCrChN`AzC|AnChBbBjB`AxBj@pNlCjBx@hBnA`BnBpA~B|@fC~BlKh@|Ar@~@~@d@z@JvESzBItAGhAPfAn@v@fAd@vAh@zBb@|@TTf@f@j@Z^VZTTLn@`@b@X^Rp@d@n@`@TRZXn@f@^`@^f@X^b@j@AH@LDFBDFJFFFBD?LXNXLLNLb@ZNNNNFTFTJ~@RhB\\fDFZNl@HVJRJLLFb@RfCdAXRP\\HPZdAbDzKV~@Z`B^fHKjB[hB}@hBm@l@{@b@uCv@iAp@{@dAm@hA_@n@s@v@U\\S^aCjHGXEZCf@Ad@@^D\\Z`BPt@Nz@^`DHp@~BxSpAdL^dELfD?pEQnEkAdKMnACfA@bAZpDDhC?~C?hCJ|AbArHJpCT|B^pAl@bAxAlAhCzA`HrCdAf@`@X~@x@fAhBb@lAh@xBJx@JnAJnGh@hODzBG|AI~Ae@bD{@hDw@dCmClJe@rCShDOlCYjBcAlFIrBBx@BnBKbDG|@AZNdAnApDj@~BZ~BVt@jBtDVh@H`@E`@Y\\[BcA@Y@WDGHKLKj@GpBN^ZR|FnCr@Zd@ZDDFDlNtK\\`@Lh@LrCPz@zBzDxCjFLn@BR@^?lAAd@Gl@Mt@C?E?EBCDADAF@F@DBDBBWvACVAP@^DVRp@N^HPXXfA`@r@ZZZb@x@BZId@OT_A~AEZ@NJRZb@BDFRFbBN`@FVJXHXFNBHHN@@@H@H?JAJEAC@CBCBAD?D?D?DBB@BB@B@B?BABCDLv@r@NNXXNLJJLLJJLLJJHFXNv@X`ATh@FpB?VJNBLB\\TLJR\\Vp@BHBJDNNt@BTDTBXAXAVCFAF?L@JBHDHDDFBH?HCFEDIPIRER@P@p@Z|@d@Zb@^p@LLlBd@XHdAh@vEnD`Ar@dAvAHFn@f@f@R",
@@ -49,10 +50,18 @@ export class RouteListPage implements OnInit {
 
   // sort by timeToDest and price functions
 
-  constructor(private router: Router) { }
+  constructor(private httpClient: HttpClient, private router: Router) { }
 
   ngOnInit() {
+    this.getRouteList();
   }
+
+  getRouteList(){
+    const url = "";
+    this.httpClient.get(url)
+    .subscribe(apiData => (this.routes = apiData));
+  }
+  
 
   showRouteInfo(polylineID: String) {
     this.router.navigate(['/route-map', polylineID]);

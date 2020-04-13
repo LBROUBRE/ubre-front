@@ -14,9 +14,9 @@
     <ion-searchbar placeholder="Onde queres que te recollamos?" id="origin_input"></ion-searchbar>
     <ion-searchbar placeholder="Onde queres ir?" id="destination_input"></ion-searchbar>
     <ion-item>
-      <ion-label>Cando queres ir?</ion-label>
-      <ion-datetime displayFormat="D MMM YYYY H:mm" value="2020-06-21T12:00Z"></ion-datetime>
+      <ion-label>Cando queres saír?</ion-label>
+      <ion-datetime displayFormat="D MMM YYYY H:mm" value="2020-04-23T12:00Z" id="pickup_date_input"></ion-datetime>
     </ion-item>
-    <ion-button (click)="sendRequest()" type="submit" color="danger" shape="round">Buscar viaxe</ion-button>
+    <ion-button (click)="sendPostRequest()" type="submit" color="danger" shape="round">Buscar viaxe</ion-button>
   </form>
 </ion-content>
