@@ -4,7 +4,7 @@ import { Storage } from '@ionic/storage';
 import { BehaviorSubject, Observable, from, of } from 'rxjs';
 import { take, map, switchMap } from 'rxjs/operators';
 import { JwtHelperService } from "@auth0/angular-jwt";
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { tap, catchError } from 'rxjs/operators';
 
@@ -17,6 +17,7 @@ const TOKEN_KEY = 'jwt-token';
 export class AuthService {
   public user: Observable<any>;
   private userData = new BehaviorSubject(null);
+  public token;
   authenticationState = new BehaviorSubject(false);
  
   constructor(private storage: Storage, private http: HttpClient, private plt: Platform, private router: Router) { 
@@ -32,7 +33,8 @@ export class AuthService {
       }),
       map(token => {
         if (token) {
-          let decoded = helper.decodeToken(token); 
+          let decoded = helper.decodeToken(token);
+          localStorage.setItem('jwt-token', token); // añade el token al local storage para que se pueda obtener desde otra página
           this.userData.next(decoded);
           return true;
         } else {
@@ -40,6 +42,7 @@ export class AuthService {
         }
       })
     );
+    
   }
  
   login(credentials: {email: string, password: string }) {
@@ -52,18 +55,34 @@ export class AuthService {
       switchMap(token => {
         let decoded = helper.decodeToken(token);
         this.userData.next(decoded);
- 
         let storageObs = from(this.storage.set(TOKEN_KEY, token));
         return storageObs;
       })
     );
   }
 
-  getUser() {
+  register(user){
+    console.log(user);
+    return this.http.post('http://127.0.0.1:8000/movility/signup', user).pipe(
+    take(1),
+    map(res => {
+      return res;
+    })
+    )
+  }
+
+  getUser(){ // Retorna el id, username, email, etc.
     return this.userData.getValue();
+  }
+
+  getToken(){
+    console.log(this.token)
+    return this.token;
+
   }
  
   logout() {
+    localStorage.removeItem('jwt-token');
     this.storage.remove(TOKEN_KEY).then(() => {
       this.router.navigateByUrl('/');
       this.userData.next(null);
