@@ -1,0 +1,36 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Rutas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-list-header>
+      Rutas sugeridas
+    </ion-list-header>
+
+    <ion-card *ngFor="let route of routes" (click)="showRouteInfo(route.polylineID)">
+      <ion-item detail="false">
+        <ion-label>
+          <ion-icon slot="start" name="location-outline"></ion-icon>
+          <h3>{{route.origin}}</h3>
+          <br>
+          <ion-icon slot="start" name="golf-outline"></ion-icon>
+          <h3>{{route.destination}}</h3>
+          <br>
+          <!--<ion-icon slot="start" name="time-outline"></ion-icon>-->
+          <p>{{route.timeToDest}} min.</p>
+        </ion-label>
+        <ion-button fill="outline" size="small" slot="start">{{route.price}}€</ion-button>
+      </ion-item>
+    </ion-card>
+
+  </ion-list>
+
+</ion-content>

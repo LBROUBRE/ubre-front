@@ -23,7 +23,7 @@ export class Tab1Page implements OnInit {
         "destination":(<HTMLInputElement>document.getElementById("destination_input")).value
       }
     };
-    this.router.navigate(['/route-map'], navigationExtras);
+    this.router.navigate(['/route-list'], navigationExtras);
   }
 
 }

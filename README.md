@@ -1,14 +1,27 @@
 # ubre-front
 Aquí voy a describir los pasos a seguir para desplegar el front-end en cualquier ordenador:
 
-** Primero hay que tener el instalador de paquetes npm instalado.
+Primero instalamos el instalador de paquetes npm utilizando nvm
+```
+curl https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
+```
 
-1.- npm install -g @ionic/cli native-run cordova-res
+Recarga la terminal y comprueba que nvm está correctamente instalado con 
+```
+nvm --version
+```
 
-2.- git clone https://github.com/LBROUBRE/ubre-front.git
+Ahora instalamos npm
+```
+nvm install --lts
+```
 
-3.- cd ubre-front/front-end
-
-4.- npm install
-
-5.- ionic serve (se nos desplegará la aplicación en: http://localhost:8100)
+Por último instalamos nuestro repositorio:
+```
+npm install -g @ionic/cli native-run cordova-res
+git clone https://github.com/LBROUBRE/ubre-front.git
+cd ubre-front
+npm install
+ionic serve 
+```
+se nos desplegará la aplicación en: http://localhost:8100
