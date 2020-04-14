@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -20,6 +21,10 @@ const routes: Routes = [
   {
     path: 'forgot-password',
     loadChildren: () => import('./forgot-password/forgot-password.module').then( m => m.ForgotPasswordPageModule)
+  },{
+    path: 'viajes',
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule),
+    canActivate: [AuthGuard]
   },
   {
     path: 'account',
@@ -37,27 +42,6 @@ const routes: Routes = [
     path: 'route-map',
     loadChildren: () => import('./route-map/route-map.module').then( m => m.RouteMapPageModule)
   },
-  {
-    path: 'route-map/:polylineID',
-    loadChildren: () => import('./route-map/route-map.module').then( m => m.RouteMapPageModule)
-  },
-  {
-    path: 'origin',
-    loadChildren: () => import('./origin/origin.module').then( m => m.OriginPageModule)
-  },
-  {
-    path: 'origin-map',
-    loadChildren: () => import('./origin-map/origin-map.module').then( m => m.OriginMapPageModule)
-  },
-  {
-    path: 'route-list',
-    loadChildren: () => import('./route-list/route-list.module').then( m => m.RouteListPageModule)
-  },
-  {
-    path: 'my-trips',
-    loadChildren: () => import('./my-trips/my-trips.module').then( m => m.MyTripsPageModule)
-  },
-
 
 
 

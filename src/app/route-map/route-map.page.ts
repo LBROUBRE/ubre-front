@@ -24,7 +24,7 @@ export class RouteMapPage implements OnInit {
 
     leafletMap() {
         // In setView add latLng and zoom
-
+      
         this.route.params.subscribe(params => {
             this.polylineID = params["polylineID"];
         });

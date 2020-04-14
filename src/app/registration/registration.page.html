@@ -8,25 +8,45 @@
 </ion-header>
 
 <ion-content>
-  <form>
+  <form #form="ngForm" (ngSubmit)="register(form)">
     <ion-item lines="full">
       <ion-label position="floating">Nome</ion-label>
-      <ion-input type="text" required></ion-input>
+      <ion-input name="name" type="text" ngModel required></ion-input>
     </ion-item>
 
     <ion-item lines="full">
       <ion-label position="floating">Apelidos</ion-label>
-      <ion-input type="text" required></ion-input>
+      <ion-input name="lastName" type="text" ngModel required></ion-input>
     </ion-item>
     
     <ion-item lines="full">
       <ion-label position="floating">Email</ion-label>
-      <ion-input type="email" required></ion-input>
+      <ion-input name="email" type="email" ngModel required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Dni</ion-label>
+      <ion-input name="dni" type="text" ngModel required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Teléfono</ion-label>
+      <ion-input name="tlf" type="text" ngModel required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Idade</ion-label>
+      <ion-input name="age" type="number" ngModel required></ion-input>
+    </ion-item>
+
+    <ion-item lines="full">
+      <ion-label position="floating">Xénero</ion-label>
+      <ion-input name="gender" type="text" ngModel required></ion-input>
     </ion-item>
 
     <ion-item lines="full">
       <ion-label position="floating">Contrasinal</ion-label>
-      <ion-input type="password" required></ion-input>
+      <ion-input name="password" type="password" ngModel required></ion-input>
     </ion-item>
 
     <ion-item lines="full">
@@ -36,7 +56,7 @@
 
     <ion-row>
       <ion-col>
-        <ion-button [routerLink]="['/app']" type="submit" color="danger" expand="block">Rexistrarse</ion-button>
+        <ion-button [routerLink]="['/login']" type="submit" color="danger" expand="block">Rexistrarse</ion-button>
       </ion-col>
     </ion-row>
   </form>
