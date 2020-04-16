@@ -38,10 +38,6 @@ const routes: Routes = [
     loadChildren: () => import('./route-map/route-map.module').then( m => m.RouteMapPageModule)
   },
   {
-    path: 'route-map/:polylineID',
-    loadChildren: () => import('./route-map/route-map.module').then( m => m.RouteMapPageModule)
-  },
-  {
     path: 'origin',
     loadChildren: () => import('./origin/origin.module').then( m => m.OriginPageModule)
   },

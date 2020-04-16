@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationExtras } from "@angular/router";
-import { Map, tileLayer, marker } from "leaflet";
 import {NativeGeocoder,NativeGeocoderOptions} from "@ionic-native/native-geocoder/ngx";
+import * as L from 'leaflet';
+import * as esri from 'esri-leaflet';
 
 @Component({
   selector: 'app-origin-map',
@@ -13,7 +14,7 @@ export class OriginMapPage implements OnInit {
   ngOnInit() {
   }
 
-  map: Map;
+  map: L.Map;
   newMarker: any;
   address: string[];
 
@@ -26,21 +27,32 @@ export class OriginMapPage implements OnInit {
 
   // The below function is added
   loadMap() {
-    // In setView add latLng and zoom
-    this.map = new Map('mapOrigin').setView([42.339236, -8.461685], 7);
+    this.map = L.map('mapOrigin').setView([42.339236, -8.461685], 7);
 
-    tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-    { attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'})
-    .addTo(this.map);
-
-    marker([42.339236, -8.461685], {
-      draggable: true
-    }).addTo(this.map).bindPopup('Welcome to ÜBRE demo.').openPopup();
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(this.map);
+  
+    /*
+    var searchControl = L.esri.Geocoding.geosearch().addTo(this.map);
+  
+    var results = L.layerGroup().addTo(this.map);
+  
+    searchControl.on('results', function (data) {
+      results.clearLayers();
+      for (var i = data.results.length - 1; i >= 0; i--) {
+        results.addLayer(L.marker(data.results[i].latlng));
+      }
+    });
+    */
   }
+
+
+
   
   locatePosition() {
     this.map.locate({ setView: true }).on("locationfound", (e: any) => {
-      this.newMarker = marker([e.latitude, e.longitude], {
+      this.newMarker = L.marker([e.latitude, e.longitude], {
         draggable: true
       }).addTo(this.map);
 

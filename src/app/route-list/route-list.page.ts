@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 import { IonSelect } from '@ionic/angular';
 import { Observable } from 'rxjs';
-import { Router, NavigationExtras } from '@angular/router';
+import { ActivatedRoute, Router, NavigationExtras} from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -48,23 +48,39 @@ export class RouteListPage implements OnInit {
     }
   ]
 
-  // sort by timeToDest and price functions
+  ID_solicitud: String;
 
-  constructor(private httpClient: HttpClient, private router: Router) { }
+  constructor(private httpClient: HttpClient, private route: ActivatedRoute, private router: Router) {
+    this.route.queryParams.subscribe(params => { // con esto recogemos el parámetro "id" que enviamos desde tab1
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.ID_solicitud = this.router.getCurrentNavigation().extras.state.id;
+      }
+    });
+  }
 
   ngOnInit() {
-    this.getRouteList();
+    //this.getRouteList();
   }
 
-  getRouteList(){
-    const url = "";
-    this.httpClient.get(url)
-    .subscribe(apiData => (this.routes = apiData));
+  getRouteList(){ //Obtenemos todas las rutas asociadas a una solicitud
+    const URL = "http://localhost:8000/movility/requests/route/" + this.ID_solicitud + "/"; // url/id_de_solicitud_que_recibimos_de_tab1
+    this.httpClient.get(URL)
+      .subscribe(apiData => (this.routes = apiData)); //lo guardamos en el array "routes"
   }
-  
+
 
   showRouteInfo(polylineID: String) {
-    this.router.navigate(['/route-map', polylineID]);
+
+    //this.router.navigate(['/route-map', polylineID]);
+
+    let navigationExtras: NavigationExtras = {
+      state: {
+        id: this.ID_solicitud,
+        polylineID
+      }
+    };
+
+    this.router.navigate(['/route-map'], navigationExtras);
   }
 
 }

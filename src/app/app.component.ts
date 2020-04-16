@@ -37,6 +37,11 @@ export class AppComponent {
         icon  : "newspaper"
       },
       {
+        title : "As miñas viaxes",
+        url   : "/my-trips",
+        icon  : "bookmark"
+      },
+      {
         title : "Conta",
         url   : "/account",
         icon  : "person-circle"

@@ -42,27 +42,36 @@ export class Tab1Page implements OnInit {
 
 
   sendPostRequest() {
-    var myHeaders = new HttpHeaders();
-    myHeaders.append("Accept", 'application/json');
-    myHeaders.append('Content-Type', 'application/json' );
 
-    let postData = {
-      "origin":(<HTMLInputElement>document.getElementById("origin_input")).value,
-      "destination":(<HTMLInputElement>document.getElementById("destination_input")).value,
-      "pickup_date":(<HTMLInputElement>document.getElementById("pickup_date_input")).value
-    }
+      var myHeaders = new HttpHeaders();
+      myHeaders.append("Accept", 'application/json');
+      myHeaders.append('Content-Type', 'application/json' );
 
-    this.httpClient.post("http://127.0.0.1:3000/customers", postData, {headers: myHeaders})
-      .subscribe(data => {
-        console.log(data['_body']);
-       }, error => {
-        console.log(error);
-      });
+      let postData = {
+        "origin":(<HTMLInputElement>document.getElementById("origin_input")).value,
+        "destination":(<HTMLInputElement>document.getElementById("destination_input")).value,
+        "pickup_date":(<HTMLInputElement>document.getElementById("pickup_date_input")).value,
+        "ID_user": null //hay que pillarlo de la base de datos
+      }
 
-    this.router.navigate(['/route-list']);  
-    
-  }
+      
+      var URL = "http://localhost:8000/movility/requests/";
+      var backend_response = this.httpClient.post(URL, postData, {headers: myHeaders})
+        .subscribe(data => {
+          console.log(data['_body']);
+        }, error => {
+          console.log(error);
+        });
 
-  
+      //var ID_solicitud = "";
+
+      let navigationExtras: NavigationExtras = { // con esto podemos enviar el parámetro "ID_solicitud" a otra página
+        state: {
+          id: backend_response["id"]
+        }
+      };
+
+      this.router.navigate(['/route-list'], navigationExtras);
+  }  
 
 }

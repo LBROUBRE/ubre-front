@@ -3,14 +3,16 @@
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
-    <ion-title>Ruta en mapa</ion-title>
+    <ion-title>Ruta no mapa</ion-title>
   </ion-toolbar>
 </ion-header>
 
 
 <ion-content>  
 
-  <div id="mapId" style="width: 100%; height: 100%"></div>
+  <div id="mapId" style="width: 100%; height: 80%"></div>
+
+  <ion-button (click)="suscribeToRoute()" type="submit" color="secondary" expand="full">Suscribirse á ruta</ion-button>
   
 </ion-content>
 

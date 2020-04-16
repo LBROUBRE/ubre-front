@@ -7,6 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content>
   
   <ion-item style="cursor: pointer" (click)="locatePosition()">
@@ -22,8 +23,7 @@
     <ion-textarea [(ngModel)]="address" type="text" style="margin-top:10px;"></ion-textarea>
   </ion-item>
 
-  <div id="mapOrigin" style="height:60%">
-  </div>
+  <div id="mapOrigin" style="height:70%"></div>
 
   <ion-button shape="round" expand="block" (click)="confirmPickupLocation()">Confirmar punto de recollida</ion-button>
 
