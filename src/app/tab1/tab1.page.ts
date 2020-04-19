@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
 
@@ -13,7 +13,15 @@ export class Tab1Page implements OnInit {
 
   results: Observable<any>;
 
-  constructor(public httpClient: HttpClient, private router: Router, public loadingController: LoadingController) { }
+  pickupLocation: string;
+
+  constructor(public httpClient: HttpClient, private router: Router, private route: ActivatedRoute, public loadingController: LoadingController) {
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.pickupLocation = this.router.getCurrentNavigation().extras.state.pickupLocation;
+      }
+    });
+  }
   
   ngOnInit() {
   }

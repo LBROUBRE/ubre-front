@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '', redirectTo: 'app', pathMatch: 'full' },
   { path: 'home', loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)},
   {
     path: 'app',
@@ -42,10 +42,6 @@ const routes: Routes = [
   {
     path: 'route-map',
     loadChildren: () => import('./route-map/route-map.module').then( m => m.RouteMapPageModule)
-  },
-  {
-    path: 'origin',
-    loadChildren: () => import('./origin/origin.module').then( m => m.OriginPageModule)
   },
   {
     path: 'origin-map',

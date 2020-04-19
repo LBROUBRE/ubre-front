@@ -11,12 +11,26 @@
 <ion-content>
   <form>
     <!--[routerLink]="['/origin']" -->
-    <ion-searchbar placeholder="Onde queres que te recollamos?" id="origin_input"></ion-searchbar>
-    <ion-searchbar placeholder="Onde queres ir?" id="destination_input"></ion-searchbar>
-    <ion-item>
-      <ion-label>Cando queres saír?</ion-label>
-      <ion-datetime displayFormat="D MMM YYYY H:mm" value="2020-04-23T12:00Z" id="pickup_date_input"></ion-datetime>
-    </ion-item>
-    <ion-button (click)="sendPostRequest()" type="submit" color="secondary" shape="round" expand="full" id="search_routes_button">Buscar viaxe</ion-button>
+    <!--<ion-searchbar [routerLink]="['/origin-map']" placeholder="Onde queres que te recollamos?" id="origin_input" value={{pickupLocation}}></ion-searchbar>-->
+    <ion-list>
+      <ion-item>
+        <ion-icon slot="start" name="location-outline"></ion-icon>
+        <ion-input [routerLink]="['/origin-map']" placeholder="Onde queres que te recollamos?" id="origin_input" value="{{pickupLocation}}" clearInput></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="golf-outline"></ion-icon>
+        <ion-input placeholder="Onde queres ir?" id="destination_input" clearInput></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-icon slot="start" name="calendar-outline"></ion-icon>
+        <ion-label>Cando queres saír?</ion-label>
+        <ion-datetime displayFormat="D MMM YYYY H:mm" value="2020-04-23T12:00Z" id="pickup_date_input"></ion-datetime>
+      </ion-item>
+    </ion-list>
+
+    <ion-button (click)="sendPostRequest()" type="submit" color="secondary" shape="round" expand="full" id="search_routes_button">
+      <ion-icon slot="start" name="search-outline"></ion-icon>
+      Buscar viaxe
+    </ion-button>
   </form>
 </ion-content>
