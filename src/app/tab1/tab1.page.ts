@@ -14,11 +14,13 @@ export class Tab1Page implements OnInit {
   results: Observable<any>;
 
   pickupLocation: string;
+  deliveryLocation: string;
 
   constructor(public httpClient: HttpClient, private router: Router, private route: ActivatedRoute, public loadingController: LoadingController) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.pickupLocation = this.router.getCurrentNavigation().extras.state.pickupLocation;
+        this.deliveryLocation = this.router.getCurrentNavigation().extras.state.deliveryLocation;
       }
     });
   }

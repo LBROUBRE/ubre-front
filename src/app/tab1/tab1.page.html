@@ -19,7 +19,7 @@
       </ion-item>
       <ion-item>
         <ion-icon slot="start" name="golf-outline"></ion-icon>
-        <ion-input placeholder="Onde queres ir?" id="destination_input" clearInput></ion-input>
+        <ion-input [routerLink]="['/destination-map']" placeholder="Onde queres ir?" id="destination_input" value="{{deliveryLocation}}" clearInput></ion-input>
       </ion-item>
       <ion-item>
         <ion-icon slot="start" name="calendar-outline"></ion-icon>

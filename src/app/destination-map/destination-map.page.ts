@@ -5,11 +5,11 @@ import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 import * as L from 'leaflet';
 
 @Component({
-  selector: 'app-origin-map',
-  templateUrl: './origin-map.page.html',
-  styleUrls: ['./origin-map.page.scss'],
+  selector: 'app-destination-map',
+  templateUrl: './destination-map.page.html',
+  styleUrls: ['./destination-map.page.scss'],
 })
-export class OriginMapPage implements OnInit {
+export class DestinationMapPage implements OnInit {
 
   ngOnInit() {
   }
@@ -26,10 +26,10 @@ export class OriginMapPage implements OnInit {
   }
 
   loadMap() {
-    var ini_lat = 42.453336; //Latitud de Pontevedra centro
-    var ini_long = -8.647132; //Longitud de Pontevedra centro
+    var ini_lat = 42.341689; //Latitud de Fornelos de Montes centro
+    var ini_long = -8.452490; //Longitud de Fornelos de Montes centro
 
-    this.map = L.map('mapOrigin').setView([ini_lat, ini_long], 9);
+    this.map = L.map('mapDestination').setView([ini_lat, ini_long], 9);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -85,10 +85,10 @@ export class OriginMapPage implements OnInit {
   }
 
 
-  confirmPickupLocation() {
+  confirmDeliveryLocation() {
     let navigationextras: NavigationExtras = {
       state: {
-        pickupLocation: this.address
+        deliveryLocation: this.address
       }
     };
     this.router.navigate(["/app/tab1"], navigationextras);
