@@ -8,29 +8,52 @@
 </ion-header>
 
 <ion-content>
+  <div *ngIf="routes.length > 0; else showNewRouteSubscription">
+    <ion-item [hidden]='hideList'>
+      <ion-label>Reordear segundo...</ion-label>
+      <ion-select placeholder="order" #routeList (ionChange)='setOrder()'>
+        <ion-select-option value="1">Tempo de tardanza</ion-select-option>
+        <ion-select-option value="2">Prezo</ion-select-option>
+      </ion-select>
+    </ion-item>
 
-  <ion-list>
+    <ion-list ng-repeat="route in routes | orderBy:'-timeToDest'">
+      <ion-toolbar>
+        <ion-buttons slot="primary">
+          <ion-button (click)='reorderRoutes()'> <!--(click)="filter()"-->
+            <ion-icon slot="icon-only" name="filter"></ion-icon>
+          </ion-button>
+          <ion-button (click)='reorderRoutes()'> <!--(click)="reorder()"-->
+            <ion-icon slot="icon-only" name="options"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+        <ion-list-header>Rutas suxeridas</ion-list-header>
+      </ion-toolbar>
 
-    <ion-list-header>
-      Rutas sugeridas
-    </ion-list-header>
-
-    <ion-card *ngFor="let route of routes" (click)="showRouteInfo(route.polylineID)">
-      <ion-item detail="false">
-        <ion-label>
-          <ion-icon slot="start" name="location-outline"></ion-icon>
-          <h3>{{route.origin}}</h3>
-          <br>
-          <ion-icon slot="start" name="golf-outline"></ion-icon>
-          <h3>{{route.destination}}</h3>
-          <br>
-          <!--<ion-icon slot="start" name="time-outline"></ion-icon>-->
-          <p>{{route.timeToDest}} min.</p>
-        </ion-label>
-        <ion-button fill="outline" size="small" slot="start">{{route.price}}€</ion-button>
-      </ion-item>
-    </ion-card>
-
-  </ion-list>
-
+      <ion-card *ngFor="let route of routes" (click)="showRouteInfo(route.polylineID)">
+        <ion-item detail="false">
+          <ion-label>
+            <ion-icon slot="start" name="location-outline"></ion-icon>
+            <h3> {{route.origin}}</h3>
+            <br>
+            <ion-icon slot="start" name="golf-outline"></ion-icon>
+            <h3> {{route.destination}}</h3>
+            <br>
+            <ion-icon slot="start" name="time-outline"></ion-icon>
+            <h3> {{route.timeToDest}} min.</h3>
+          </ion-label>
+          <ion-button fill="outline" size="small" slot="start">{{route.price}}€</ion-button>
+        </ion-item>
+      </ion-card>
+    </ion-list>
+  </div>  
+  
+  <ng-template #showNewRouteSubscription>
+    <h2 class="warning">Sen demanda</h2>
+    <h5 class="info">Vaia... Parece que aínda non hai suficiente xente polo camiño...</h5>
+    <p class="suggestion">Queres subscribirte a esta ruta? Serás notificado cando haia a demanda suficiente</p>
+    <section>
+    <ion-button class="subscribeButton" fill="outline" slot="start">SUBSCRIBIRSE</ion-button> <!--(click)=subscribe() and add to pendentes-->
+    </section>
+  </ng-template>
 </ion-content>

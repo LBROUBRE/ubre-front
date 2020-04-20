@@ -12,4 +12,8 @@ export class NotificationsPage implements OnInit {
   ngOnInit() {
   }
 
+  notifications: any = [
+
+  ]
+
 }

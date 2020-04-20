@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Lugar de deixada</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  
+  <ion-item style="cursor: pointer" (click)="locatePosition()">
+    <ion-button fill="clear">
+    <ion-icon slot="start" name="locate"></ion-icon>
+      Ubicación actual
+    </ion-button>
+  </ion-item>
+
+  <ion-item>
+    <ion-icon slot="start" name="navigate-outline"></ion-icon>
+    <ion-label position="stacked">Dirección</ion-label>
+    <ion-input [(ngModel)]="address" type="text" value="{{address}}" style="margin-top:10px;"></ion-input>
+  </ion-item>
+
+  <div id="mapDestination" style="height:70%"></div>
+
+  <ion-button shape="round" expand="block" (click)="confirmDeliveryLocation()">
+    Confirmar punto de deixada
+  </ion-button>
+
+</ion-content>
+

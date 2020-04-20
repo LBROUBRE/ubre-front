@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Map, tileLayer, marker, Polyline } from 'leaflet';
-import { ActivatedRoute} from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import { ActivatedRoute, Router} from '@angular/router';
+import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-route-map',
@@ -11,23 +12,64 @@ import { Observable } from 'rxjs';
 })
 export class RouteMapPage implements OnInit {
 
-    map: Map;
-    polylineID: String;
+    ID_solicitud: string;
+    polylineID: string;
 
-    constructor(private route: ActivatedRoute) {
+    constructor(private httpClient: HttpClient, private route: ActivatedRoute, private router: Router, private toastController: ToastController) {
+        this.route.queryParams.subscribe(params => { // con esto recogemos el parámetro "id" que enviamos desde tab1
+        if (this.router.getCurrentNavigation().extras.state) {
+          this.ID_solicitud = this.router.getCurrentNavigation().extras.state.ID_solicitud;
+          this.polylineID = this.router.getCurrentNavigation().extras.state.polylineID;
+        }
+      });
     }
 
     ngOnInit() {
     }    
 
+    suscribeToRoute(){
+        this.presentToast(); //mensajito pop-up que indica que te has suscrito al viaje
+        this.saveRouteToMyTrips(); //guarda la ruta reservada en la pantalla de "as miñas viaxes"
+        this.sendConfirmationToBackEnd(); //le indica al servidor que X usuario se ha suscrito a Y ruta
+    }
+
+    async presentToast() {
+        const toast = await this.toastController.create({
+          message: 'Viaxe reservado! Podes acceder a "As miñas viaxes" para consultala máis adiante',
+          duration: 5000
+        });
+        toast.present();
+    }
+
+    saveRouteToMyTrips(){
+        
+    }
+
+    sendConfirmationToBackEnd(){
+        //enviar un post al backend SOLAMENTE CON EL ID DE LA SOLICITUD !!
+
+        var myHeaders = new HttpHeaders();
+        myHeaders.append("Accept", 'application/json');
+        myHeaders.append('Content-Type', 'application/json' );
+        
+        var URL = "";
+        var backend_response = this.httpClient.post(URL, this.ID_solicitud, {headers: myHeaders})
+          .subscribe(data => {
+            console.log(data['_body']);
+          }, error => {
+            console.log(error);
+          });
+    }
+
+
+    ////////////////////////////////////////////////////////////
+
+    map: Map;
+
     ionViewDidEnter() { this.leafletMap(); }
 
     leafletMap() {
         // In setView add latLng and zoom
-      
-        this.route.params.subscribe(params => {
-            this.polylineID = params["polylineID"];
-        });
         
         var decoded = this.decodePolyline(this.polylineID);
         
@@ -40,20 +82,22 @@ export class RouteMapPage implements OnInit {
 
         this.map = new Map('mapId').setView([middle_lat, middle_lon], 11); //TODO centrar el mapa dependiendo de la ruta dibujada
         tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: 'OpenStreetMap - ÜBRE',
+            attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
         }).addTo(this.map);
 
         var poly = new Polyline(decoded)
         poly.addTo(this.map)
 
         marker([destination_lat, destination_lon]).addTo(this.map)
-          .bindPopup('DESTINATION')
+          .bindPopup('Punto de deixada')
           .openPopup();
           
         marker([origin_lat, origin_lon]).addTo(this.map)
-          .bindPopup('ORIGIN')
+          .bindPopup('Punto de recollida')
           .openPopup();
     }
+
+    
 
     /** Remove map when we have multiple map object */
     ionViewWillLeave() {

@@ -12,4 +12,8 @@ export class MyTripsPage implements OnInit {
   ngOnInit() {
   }
 
+  routes: any = [
+
+  ]
+
 }
