@@ -58,7 +58,8 @@ const routes: Routes = [
   {
     path: 'slides',
     loadChildren: () => import('./slides/slides.module').then( m => m.SlidesPageModule)
-  },  {
+  },
+  {
     path: 'destination-map',
     loadChildren: () => import('./destination-map/destination-map.module').then( m => m.DestinationMapPageModule)
   },
