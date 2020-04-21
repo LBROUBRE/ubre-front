@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, NavigationExtras } from "@angular/router";
+import { Router, ActivatedRoute, NavigationExtras } from "@angular/router";
 import { GeoSearchControl, OpenStreetMapProvider } from 'leaflet-geosearch';
 
 import * as L from 'leaflet';
@@ -15,11 +15,23 @@ export class DestinationMapPage implements OnInit {
   }
 
   map: L.Map;
-  marker: L.Marker;  
+  marker: L.Marker  
   position: L.LatLng;
-  address: string;  
+  deliveryLocation: string;  
 
-  constructor(private router: Router) {}
+  pickupLocation: string;
+  origin_lat: string;
+  origin_lng: string;
+
+  constructor(private router: Router, private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.pickupLocation = this.router.getCurrentNavigation().extras.state.pickupLocation;
+        this.origin_lat = this.router.getCurrentNavigation().extras.state.origin_lat;
+        this.origin_lng = this.router.getCurrentNavigation().extras.state.origin_lng;
+      }
+    });
+  }
 
   ionViewDidEnter(){
     this.loadMap();
@@ -44,7 +56,7 @@ export class DestinationMapPage implements OnInit {
       provider: provider,
       style: 'bar',
       searchLabel: 'Escribe unha dirección',
-      autoClose: false,
+      autoClose: true,
       showMarker: false
     });
     this.map.addControl(searchControl);  
@@ -67,12 +79,12 @@ export class DestinationMapPage implements OnInit {
   cosasConMarcador(){
     this.position = this.marker.getLatLng();
     
-    fetch(`https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/reverseGeocode?f=pjson&langCode=EN&location=${this.position.lng},${this.position.lat}`)
+    fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${this.position.lat}&lon=${this.position.lng}`)
     .then(res => res.json())
     .then(myJson => {
-      this.marker.bindPopup(myJson.address.LongLabel).openPopup();
-      console.log(myJson.address);
-      this.address = myJson.address.LongLabel;
+      this.marker.bindPopup(myJson.display_name).openPopup();
+      //console.log(myJson.display_name);
+      this.deliveryLocation = myJson.display_name;
     }); 
   }
 
@@ -88,7 +100,13 @@ export class DestinationMapPage implements OnInit {
   confirmDeliveryLocation() {
     let navigationextras: NavigationExtras = {
       state: {
-        deliveryLocation: this.address
+        deliveryLocation: this.deliveryLocation,
+        destination_lat: this.position.lat,
+        destination_lng: this.position.lng,
+
+        pickupLocation: this.pickupLocation,
+        origin_lat: this.origin_lat,
+        origin_lng: this.origin_lng
       }
     };
     this.router.navigate(["/app/tab1"], navigationextras);

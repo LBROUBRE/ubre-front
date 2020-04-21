@@ -14,18 +14,61 @@ export class Tab1Page implements OnInit {
   results: Observable<any>;
 
   pickupLocation: string;
+  origin_lat: number;
+  origin_lng: number;
+
   deliveryLocation: string;
+  destination_lat: number;
+  destination_lng: number;
 
   constructor(public httpClient: HttpClient, private router: Router, private route: ActivatedRoute, public loadingController: LoadingController) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.pickupLocation = this.router.getCurrentNavigation().extras.state.pickupLocation;
+        this.origin_lat = this.router.getCurrentNavigation().extras.state.origin_lat;
+        this.origin_lng = this.router.getCurrentNavigation().extras.state.origin_lng;
+
         this.deliveryLocation = this.router.getCurrentNavigation().extras.state.deliveryLocation;
+        this.destination_lat = this.router.getCurrentNavigation().extras.state.destination_lat;
+        this.destination_lng = this.router.getCurrentNavigation().extras.state.destination_lng;
       }
+      console.log("pickupLocation: " + this.pickupLocation);
+      console.log("(" + this.origin_lat + "," + this.origin_lng + ")");
+
+      console.log("deliveryLocation: " + this.deliveryLocation);
+      console.log("(" + this.destination_lat + "," + this.destination_lng + ")");
     });
-  }
+  }  
   
   ngOnInit() {
+  }
+
+  goToOriginMap(){
+    let navigationextras: NavigationExtras = {
+      state: {
+        pickupLocation: this.pickupLocation,
+        origin_lat: this.origin_lat,
+        origin_lng: this.origin_lng,
+        deliveryLocation: this.deliveryLocation,
+        destination_lat: this.destination_lat,
+        destination_lng: this.destination_lng
+      }
+    };
+    this.router.navigate(["/origin-map"], navigationextras);
+  }
+
+  goToDestinationMap(){
+    let navigationextras: NavigationExtras = {
+      state: {
+        pickupLocation: this.pickupLocation,
+        origin_lat: this.origin_lat,
+        origin_lng: this.origin_lng,
+        deliveryLocation: this.deliveryLocation,
+        destination_lat: this.destination_lat,
+        destination_lng: this.destination_lng
+      }
+    };
+    this.router.navigate(["/destination-map"], navigationextras);
   }
 
   /*
@@ -63,7 +106,6 @@ export class Tab1Page implements OnInit {
         "pickup_date":(<HTMLInputElement>document.getElementById("pickup_date_input")).value,
         "ID_user": null //hay que pillarlo de la base de datos
       }
-
       
       var URL = "http://localhost:8000/movility/requests/";
       var backend_response = this.httpClient.post(URL, postData, {headers: myHeaders})

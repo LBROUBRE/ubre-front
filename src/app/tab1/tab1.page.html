@@ -15,11 +15,11 @@
     <ion-list>
       <ion-item>
         <ion-icon slot="start" name="location-outline"></ion-icon>
-        <ion-input [routerLink]="['/origin-map']" placeholder="Onde queres que te recollamos?" id="origin_input" value="{{pickupLocation}}" clearInput></ion-input>
+        <ion-input (click)="goToOriginMap()" placeholder="Onde queres que te recollamos?" id="origin_input" value="{{pickupLocation}}" clearInput></ion-input>
       </ion-item>
       <ion-item>
         <ion-icon slot="start" name="golf-outline"></ion-icon>
-        <ion-input [routerLink]="['/destination-map']" placeholder="Onde queres ir?" id="destination_input" value="{{deliveryLocation}}" clearInput></ion-input>
+        <ion-input (click)="goToDestinationMap()" placeholder="Onde queres ir?" id="destination_input" value="{{deliveryLocation}}" clearInput></ion-input>
       </ion-item>
       <ion-item>
         <ion-icon slot="start" name="calendar-outline"></ion-icon>
