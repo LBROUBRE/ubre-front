@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { Router, ActivatedRoute, NavigationExtras } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 import { HttpClient, HttpHeaders} from '@angular/common/http';
+import { AccountService } from '../services/account.service';
 
 @Component({
   selector: 'app-tab1',
@@ -21,7 +22,9 @@ export class Tab1Page implements OnInit {
   destination_lat: number;
   destination_lng: number;
 
-  constructor(public httpClient: HttpClient, private router: Router, private route: ActivatedRoute, public loadingController: LoadingController) {
+  information = null;
+
+  constructor(public httpClient: HttpClient, private accountService: AccountService, private router: Router, private route: ActivatedRoute, public loadingController: LoadingController) {
     this.route.queryParams.subscribe(params => {
       if (this.router.getCurrentNavigation().extras.state) {
         this.pickupLocation = this.router.getCurrentNavigation().extras.state.pickupLocation;
@@ -41,6 +44,9 @@ export class Tab1Page implements OnInit {
   }  
   
   ngOnInit() {
+    this.accountService.getUserProfile().subscribe(result => {
+      this.information = result;
+    });
   }
 
   goToOriginMap(){
@@ -104,8 +110,9 @@ export class Tab1Page implements OnInit {
         "origin":(<HTMLInputElement>document.getElementById("origin_input")).value,
         "destination":(<HTMLInputElement>document.getElementById("destination_input")).value,
         "pickup_date":(<HTMLInputElement>document.getElementById("pickup_date_input")).value,
-        "ID_user": null //hay que pillarlo de la base de datos
+        "ID_user": this.information.dni
       }
+      console.log(postData);
       
       var URL = "http://localhost:8000/movility/requests/";
       var backend_response = this.httpClient.post(URL, postData, {headers: myHeaders})
