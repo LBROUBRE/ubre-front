@@ -26,6 +26,8 @@ export class LoginPage implements OnInit {
   }
 
   login(){
+    this.router.navigateByUrl('/slides');
+    /*
     this.credentials.email=this.email;
     this.credentials.password=this.password;
     this.auth.login(this.credentials).subscribe(async res => {
@@ -40,6 +42,7 @@ export class LoginPage implements OnInit {
         await alert.present();
       }
     })
+    */
   }
   
 }

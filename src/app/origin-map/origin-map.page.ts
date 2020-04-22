@@ -43,7 +43,7 @@ export class OriginMapPage implements OnInit {
 
     this.map = L.map('mapOrigin').setView([ini_lat, ini_long], 9);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=e6177e677d33431499e00edd3beb0076', {
       attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
 
@@ -54,7 +54,7 @@ export class OriginMapPage implements OnInit {
     const provider = new OpenStreetMapProvider();
     const searchControl = new GeoSearchControl({
       provider: provider,
-      style: 'bar',
+      style: 'button',
       searchLabel: 'Escribe unha dirección',
       autoClose: true,
       showMarker: false

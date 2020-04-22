@@ -35,18 +35,18 @@ export class Tab1Page implements OnInit {
         this.destination_lat = this.router.getCurrentNavigation().extras.state.destination_lat;
         this.destination_lng = this.router.getCurrentNavigation().extras.state.destination_lng;
       }
-      console.log("pickupLocation: " + this.pickupLocation);
-      console.log("(" + this.origin_lat + "," + this.origin_lng + ")");
+      //console.log("pickupLocation: " + this.pickupLocation);
+      //console.log("(" + this.origin_lat + "," + this.origin_lng + ")");
 
-      console.log("deliveryLocation: " + this.deliveryLocation);
-      console.log("(" + this.destination_lat + "," + this.destination_lng + ")");
+      //console.log("deliveryLocation: " + this.deliveryLocation);
+      //console.log("(" + this.destination_lat + "," + this.destination_lng + ")");
     });
   }  
   
   ngOnInit() {
-    this.accountService.getUserProfile().subscribe(result => {
+    /*this.accountService.getUserProfile().subscribe(result => {
       this.information = result;
-    });
+    });*/
   }
 
   goToOriginMap(){
@@ -107,30 +107,28 @@ export class Tab1Page implements OnInit {
       myHeaders.append('Content-Type', 'application/json' );
 
       let postData = {
-        "origin":(<HTMLInputElement>document.getElementById("origin_input")).value,
-        "destination":(<HTMLInputElement>document.getElementById("destination_input")).value,
-        "pickup_date":(<HTMLInputElement>document.getElementById("pickup_date_input")).value,
-        "ID_user": this.information.dni
+        "origen":this.origin_lng+","+this.origin_lat,
+        "destino":this.destination_lng+","+this.destination_lat,
+        "fechaHoraSalida":(<HTMLInputElement>document.getElementById("pickup_date_input")).value,
+        "fechaHoraLlegada":(<HTMLInputElement>document.getElementById("delivery_date_input")).value,
+        "usuario": "54155333Q"//this.information.dni //TODO
       }
-      console.log(postData);
       
       var URL = "http://localhost:8000/movility/requests/";
       var backend_response = this.httpClient.post(URL, postData, {headers: myHeaders})
         .subscribe(data => {
-          console.log(data['_body']);
+
+          let navigationExtras: NavigationExtras = { // con esto podemos enviar el parámetro "ID_solicitud" a otra página
+          state: {
+            id: data["id"]
+            }
+          };
+    
+          this.router.navigate(['/route-list'], navigationExtras);
         }, error => {
           console.log(error);
         });
 
-      //var ID_solicitud = "";
-
-      let navigationExtras: NavigationExtras = { // con esto podemos enviar el parámetro "ID_solicitud" a otra página
-        state: {
-          id: backend_response["id"]
-        }
-      };
-
-      this.router.navigate(['/route-list'], navigationExtras);
   }  
 
 }

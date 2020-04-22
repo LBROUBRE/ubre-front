@@ -42,7 +42,6 @@ export class RouteMapPage implements OnInit {
     }
 
     saveRouteToMyTrips(){
-        
     }
 
     sendConfirmationToBackEnd(){
@@ -81,7 +80,7 @@ export class RouteMapPage implements OnInit {
         var destination_lon = decoded[decoded.length-1][1];
 
         this.map = new Map('mapId').setView([middle_lat, middle_lon], 11); //TODO centrar el mapa dependiendo de la ruta dibujada
-        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        tileLayer('https://tile.thunderforest.com/transport/{z}/{x}/{y}.png?apikey=e6177e677d33431499e00edd3beb0076', {
             attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
         }).addTo(this.map);
 
