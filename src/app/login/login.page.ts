@@ -30,7 +30,7 @@ export class LoginPage implements OnInit {
     this.credentials.password=this.password;
     this.auth.login(this.credentials).subscribe(async res => {
       if(res) {
-        this.router.navigateByUrl('/viajes');
+        this.router.navigateByUrl('/slides');
       } else {
         const alert = await this.alertCtrl.create({
           header: 'Login Failed',

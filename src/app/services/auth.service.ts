@@ -46,7 +46,7 @@ export class AuthService {
   }
  
   login(credentials: {email: string, password: string }) {
- 
+    console.log(credentials);
     return this.http.post('http://127.0.0.1:8000/movility/signin', credentials).pipe(
       take(1),
       map(res => {
